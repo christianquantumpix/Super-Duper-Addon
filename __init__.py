@@ -9,6 +9,9 @@ from threading import Timer
 
 from random import randint
 
+from . import audio
+# from audio import play_sound
+
 class ModalOperator(bpy.types.Operator):
     bl_idname = "object.modal_operator"
     bl_label = "Super Duper Addon"
@@ -26,19 +29,19 @@ class ModalOperator(bpy.types.Operator):
         print(event.type)
         if (event.type == 'C' and event.ctrl and event.value == 'RELEASE') or (event.type == 'D' and event.shift and event.value == 'RELEASE'):
             if random.random() > 0.33:
-                play_sound('copy')
+                audio.play_sound('copy')
             return {'PASS_THROUGH'}
         elif (event.type == 'DEL' or event.type == 'BACK_SPACE') and event.value == 'RELEASE':
             if random.random() > 0.33:
-                play_sound('delete')
+                audio.play_sound('delete')
                 return {'PASS_THROUGH'}
         elif event.type == 'S' and event.ctrl and event.value == 'PRESS':
             if random.random() > 0:
-                play_sound('save')
+                audio.play_sound('save')
                 return {'PASS_THROUGH'}
         elif event.value == 'RELEASE':
             if random.random() > 0.75:
-                play_sound('generic')
+                audio.play_sound('generic')
                 return {'PASS_THROUGH'}
         return {'PASS_THROUGH'}
 
@@ -52,31 +55,31 @@ class ModalOperator(bpy.types.Operator):
 def menu_func(self, context):
     self.layout.operator(ModalOperator.bl_idname, text="Super Duper Addon")
 
-def play_sound(category):
-    gutsche = "gutsche"
-    brachert = "brachert"
+# def play_sound(category):
+#     gutsche = "gutsche"
+#     brachert = "brachert"
 
-    path = os.path.dirname(os.path.abspath(__file__))
+#     path = os.path.dirname(os.path.abspath(__file__))
 
-    suffix = "/brachert"
+#     suffix = "/brachert"
 
-    if gutsche in path:
-        suffix = "/gutsche"
-    elif brachert in path: 
-        suffix = "/brachert"
+#     if gutsche in path:
+#         suffix = "/gutsche"
+#     elif brachert in path: 
+#         suffix = "/brachert"
 
-    audio_path = path + "/audio" + suffix + "/" + category
-    audio_files = os.listdir(audio_path)
+#     audio_path = path + "/audio" + suffix + "/" + category
+#     audio_files = os.listdir(audio_path)
 
-    print(audio_path)
-    print(audio_files)
+#     print(audio_path)
+#     print(audio_files)
 
-    random_index = random.randrange(0, len(audio_files))
-    print(random_index)
+#     random_index = random.randrange(0, len(audio_files))
+#     print(random_index)
 
-    device = aud.Device()
-    sound = aud.Sound(audio_path + "/" + audio_files[random_index])
-    handle = device.play(sound)
+#     device = aud.Device()
+#     sound = aud.Sound(audio_path + "/" + audio_files[random_index])
+#     handle = device.play(sound)
 
 bl_info = {
     "name": "Super Duper Addon",
